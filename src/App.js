@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const PersonForm = props => {
   return (
     <>
@@ -48,16 +48,18 @@ const Numbers = props => {
 };
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456" },
-    { name: "Ada Lovelace", number: "39-44-5323523" },
-    { name: "Dan Abramov", number: "12-43-234345" },
-    { name: "Mary Poppendieck", number: "39-23-6423122" }
-  ]);
-
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("https://my-json-server.typicode.com/VladislavsL/phonebook-app/db")
+      .then(response => {
+         setPersons(response.data.persons);
+      });
+  }, []);
 
   const addUser = event => {
     event.preventDefault();
@@ -80,8 +82,7 @@ const App = () => {
     setSearch(event.target.value);
   };
 
-  console.log(persons);
-  return (
+   return (
     <div>
       <h2>Phonebook</h2>
       <Filter
