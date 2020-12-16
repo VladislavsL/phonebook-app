@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 const PersonForm = props => {
   return (
     <>
@@ -57,7 +58,7 @@ const App = () => {
     axios
       .get("https://my-json-server.typicode.com/VladislavsL/phonebook-app/db")
       .then(response => {
-         setPersons(response.data.persons);
+        setPersons(response.data.persons);
       });
   }, []);
 
@@ -82,16 +83,17 @@ const App = () => {
     setSearch(event.target.value);
   };
 
-   return (
+  return (
     <div>
       <h2>Phonebook</h2>
-      <Filter
-        handleSearchChange={handleSearchChange}
+      <Filter handleSearchChange={handleSearchChange} />
+      <PersonForm
+        newName={newName}
+        newPhone={newPhone}
         handleNameChange={handleNameChange}
         handlePhoneChange={handlePhoneChange}
         addUser={addUser}
       />
-      <PersonForm newName={newName} newPhone={newPhone} />
       <div>
         <Numbers
           names={persons.filter(person =>
